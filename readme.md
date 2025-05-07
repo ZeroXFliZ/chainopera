@@ -1,5 +1,5 @@
 # READ FIRST SIR
-The script is for Chainopera AI.Bot will send message to ai bot.Add your auth_token in token.txt file.If you have private proxy add it in proxy.txt file.Unlike other ai,chain opera give points base on the prompt message you send(no point for simple prompt).You should change the prompt message everyday(10 prompt message per day is enough also update firstMessage).If you are getting so much error increase CONFIG.MAX_RETRIES or try later cuz server is busy alittle bit.
+The script is for Chainopera AI.Bot will send message to ai bot and complete check-in task.Add your auth_token in token.txt file.If you have private proxy create proxy.txt file and add proxy there.Unlike other ai,chain opera give points base on the prompt message you send(no point for simple prompt).You should change the prompt message everyday(10 prompt message per day is enough also update firstMessage).If you are getting so much error increase CONFIG.MAX_RETRIES or try later cuz server is busy alittle bit.
 
 Proxy format is http://username:password@ip:port
 

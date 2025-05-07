@@ -13,8 +13,10 @@ After login you will get auth_token at Application Tabs (click on F12)
 
 Then clone this github repo.
 
-Then install ```npm install axios uuid https-proxy-agent ```
+Then install ```bash
+npm install axios uuid https-proxy-agent ```
 
-Then run ```node index.js```
+Then run ```bash
+node index.js```
 
 Done sir,You can follow me here https://x.com/zeroxwayne and feel free to give stars to this repo.# chainopera

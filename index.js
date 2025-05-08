@@ -117,7 +117,6 @@ function createApiClient(token, proxy = null) {
   };
   
   if (proxy) {
-    console.log(`Using proxy: ${proxy}`);
     const httpsAgent = new HttpsProxyAgent(proxy);
     config.httpsAgent = httpsAgent;
     config.proxy = false;
@@ -146,7 +145,6 @@ const checkIn = async (token, proxy = null) => {
     
     // Add proxy if provided
     if (proxy) {
-      console.log(`Using proxy for check-in: ${proxy}`);
       const httpsAgent = new HttpsProxyAgent(proxy);
       config.httpsAgent = httpsAgent;
       config.proxy = false;
@@ -164,7 +162,6 @@ const checkIn = async (token, proxy = null) => {
           console.log('Check-in successful!');
           return true;
         } else {
-          console.log('Check-in response received but status unclear:', response.data);
           return false;
         }
       } catch (retryError) {
@@ -172,7 +169,6 @@ const checkIn = async (token, proxy = null) => {
         if (retries > CONFIG.MAX_RETRIES) {
           throw retryError;
         }
-        console.log(`Check-in attempt ${retries} failed, retrying in ${retries * 2} seconds...`);
         await delay(retries * 2000);
       }
     }
@@ -204,7 +200,7 @@ function extractUserIdFromToken(token) {
     const data = JSON.parse(payload);
     
     if (data && data.id) {
-      console.log(`Extracted userID from token: ${data.id}`);
+      console.log(`userID: ${data.id}`);
       return data.id.toString();
     }
     
@@ -235,9 +231,6 @@ async function sendMessage(apiClient, message, conversationId = null, retryCount
       model: "crypto_sentiment_agent",
       userId: userId 
     };
-
-    console.log(`Sending message: "${message}"${conversationId ? ` to conversation: ${conversationId}` : ''}`);
-    console.log(`Attempt ${retryCount + 1} of ${CONFIG.MAX_RETRIES + 1}`);
     
     const response = await apiClient.post('', payload);
     
@@ -250,10 +243,6 @@ async function sendMessage(apiClient, message, conversationId = null, retryCount
         return response.data.id;
       }
       
-      // Check for AI response
-      if (response.data.response) {
-        console.log('AI Response:', response.data.response.substring(0, 100) + '...');
-      }
       return conversationId || payload.id;
     }
     
@@ -333,7 +322,6 @@ async function runBotWithToken(token, proxy, tokenIndex, totalTokens) {
         }
         
         if (!currentConversationId) {
-          console.log('No active conversation. Creating a new one...');
           currentConversationId = await sendMessage(apiClient, "Starting a new conversation.", null, 0, userId);
           if (!currentConversationId) {
             console.error('Failed to create a new conversation. Will try again next interval.');
@@ -343,7 +331,6 @@ async function runBotWithToken(token, proxy, tokenIndex, totalTokens) {
 
         // Get the next message in sequence
         const message = CONFIG.PROMPT_MESSAGES[messageIndex];
-        console.log(`Sending message ${messageIndex + 1} of ${CONFIG.PROMPT_MESSAGES.length}: "${message}"`);
         
         const result = await sendMessage(apiClient, message, currentConversationId, 0, userId);
         
@@ -351,7 +338,6 @@ async function runBotWithToken(token, proxy, tokenIndex, totalTokens) {
           console.log('Failed to send message, will create new conversation next time');
           currentConversationId = null;
         } else {
-          console.log(`Successfully sent message to conversation: ${currentConversationId}`);
           messageIndex++;
         }
       }, CONFIG.CHAT_INTERVAL);

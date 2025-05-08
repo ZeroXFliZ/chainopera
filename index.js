@@ -331,6 +331,7 @@ async function runBotWithToken(token, proxy, tokenIndex, totalTokens) {
 
         // Get the next message in sequence
         const message = CONFIG.PROMPT_MESSAGES[messageIndex];
+        console.log(`Sending message index ${messageIndex}`);
         
         const result = await sendMessage(apiClient, message, currentConversationId, 0, userId);
         

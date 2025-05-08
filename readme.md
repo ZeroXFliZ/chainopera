@@ -11,7 +11,7 @@ Then signin with same wallet at https://chat.chainopera.ai/
 
 After login you will get auth_token at Application Tabs (click on F12)
 
-Then clone this github repo.
+Then clone this github repo. <pre>```https://github.com/ZeroXFliZ/chainopera.git```</pre>
 
 Then install <pre> ```npm install axios uuid https-proxy-agent ``` </pre>
 
